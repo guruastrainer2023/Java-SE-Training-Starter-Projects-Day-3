@@ -1,0 +1,59 @@
+Unnamed Module
+-----------------------------------------
+
+e:
+md Java9ModularProgramming
+cd Java9ModularProgramming
+md Project05
+cd Project05
+
+md src
+cd src
+
+
+
+
+
+
+notepad "Main.java"
+
+package com.training.ui;
+
+import java.util.logging.Logger;
+
+import javax.xml.parsers.SAXParserFactory;
+
+public class Main {
+
+	public static void main(String[] args) {
+		SAXParserFactory factory=SAXParserFactory.newInstance();
+		System.out.println("This project is enabled with XML parsing");
+		
+		Logger logger=Logger.getLogger(Main.class.getSimpleName());
+		logger.info("Logging Enabled in this project");
+
+		
+
+	}
+
+}
+
+cd ..
+
+
+javac -d out src\Main.java
+
+
+
+java -cp out com.training.ui.Main
+
+---------------------------------------------------------------
+
+Example 2
+
+
+
+
+
+
+

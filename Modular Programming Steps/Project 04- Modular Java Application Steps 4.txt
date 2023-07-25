@@ -1,0 +1,48 @@
+Creating JAR File for Modular Application
+---------------------------------------------
+
+md project04
+cd project04
+
+
+md src
+cd src
+
+md hello
+cd hello
+
+notepad "module-info.java"
+
+module hello {
+	requires java.xml;
+	requires java.logging;
+}
+
+notepad "Main.java"
+
+package com.training.ui;
+
+import java.util.logging.Logger;
+
+import javax.xml.parsers.SAXParserFactory;
+
+public class Main {
+
+	public static void main(String[] args) {
+		SAXParserFactory factory=SAXParserFactory.newInstance();
+		System.out.println("This project is enabled with XML parsing");
+		
+		Logger logger=Logger.getLogger(Main.class.getSimpleName());
+		logger.info("Logging Enabled in this project");
+
+	}
+
+}
+
+cd ..\..
+
+javac --module-source-path src -d out src\hello\module-info.java src\hello\Main.java
+
+jar --create --file .\helloApp.jar --module-version=1.0 --main-class com.training.ui.Main -C out\hello .
+
+java --module-path . --module hello/com.training.ui.Main

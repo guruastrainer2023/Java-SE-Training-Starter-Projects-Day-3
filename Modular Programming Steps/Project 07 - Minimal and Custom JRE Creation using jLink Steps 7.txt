@@ -1,0 +1,112 @@
+Minimal and Custom JRE Creation using jlink
+------------------------------------------------
+
+md project07
+cd project07
+
+
+md src
+cd src
+
+md loanModule
+cd loanModule
+
+notepad "HomeLoan.java"
+
+package com.training.bean;
+
+public class HomeLoan {
+
+	@Override
+	public String toString() {
+		return "HomeLoan [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
+	}
+
+}
+
+
+notepad "module-info.java"
+
+module loanModule {
+	exports com.training.bean;
+}
+
+cd ..
+
+md clientModule
+cd clientModule
+
+notepad "module-info.java"
+
+module clientModule {
+	requires java.xml;
+	requires java.logging;
+	requires loanModule;
+}
+
+notepad "Main.java"
+
+package com.training.ui;
+import java.util.logging.Logger;
+
+import javax.xml.parsers.SAXParserFactory;
+
+import com.training.bean.HomeLoan;
+
+public class Main {
+
+	public static void main(String[] args) {
+		HomeLoan homeLoan=new HomeLoan();
+		System.out.println(homeLoan);
+		
+		SAXParserFactory saxParserFactory=SAXParserFactory.newInstance();
+		
+		Logger logger=Logger.getLogger(com.training.ui.Main.class.getSimpleName());
+		logger.info("This project using Logger ..working...");
+	}
+
+}
+
+cd ..
+cd ..
+
+javac --module-source-path src -d out --module loanModule,clientModule
+java --module-path out -m clientModule/com.training.ui.Main
+
+jlink --module-path out --add-modules loanModule,clientModule --output myimage
+
+(or)
+
+jlink --module-path "C:\Program Files\Java\jdk-11.0.18\jmods;out" --add-modules clientModule,loanModule --output myimage
+
+cd myimage
+cd bin
+
+java --module-path out --module clientModule/com.training.ui.Main
+
+java --list-modules
+
+-----------------------------
+Compression
+
+jlink --module-path "C:\Program Files\Java\jdk-11.0.18\jmods;out" --add-modules clientModule,loanModule --compress=1 --output myimage
+
+Locale
+
+jlink --module-path "C:\Program Files\Java\jdk-11.0.18\jmods;out" --add-modules clientModule,loanModule,jdk.localedata --compress=1 --include-locales=en --output myimage
+
+All Plugins available
+
+jlink --list-plugins
+
+Remove Debug Symbols
+
+jlink --module-path "C:\Program Files\Java\jdk-11.0.18\jmods;out" --add-modules clientModule,loanModule,jdk.localedata --compress=1 --include-locales=en --strip-debug --output myimage
+
+launcher
+------------------------
+
+jlink --module-path "C:\Program Files\Java\jdk-11.0.18\jmods;out" --add-modules clientModule,loanModule,jdk.localedata --compress=1 --include-locales=en --strip-debug --launcher runApp=clientModule/com.training.ui.Main --output myimage
+
+myimage\bin\runApp

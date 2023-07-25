@@ -1,0 +1,37 @@
+Creating a non modular Application.....Compiling .... Execution
+-------------------------------------------------------------------
+
+e:
+md Java9ModularProgramming
+cd Java9ModularProgramming
+md Project01
+cd Project01
+
+md src\com\greeting
+cd src\com\greeting
+
+notepad "Main.java"
+
+package com.greeting;
+
+public class Main{
+
+	public static void main(String args[]){
+		System.out.println("Hello World !");
+	
+	}
+
+
+
+}
+
+cd ..\..\..
+
+javac -d classes src\com\greeting\Main.java
+tree /f
+java -cp classes com.greeting.Main
+
+
+-------------------------------------------------------------------------
+e
+

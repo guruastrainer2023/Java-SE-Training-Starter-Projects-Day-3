@@ -1,0 +1,81 @@
+Creating 2 Modules --- Compiling...Execution
+------------------------------------------------
+
+e:
+
+cd Java9ModularProjects
+
+md Project03
+
+cd Project03
+
+md src
+cd src
+
+md welcomeModule
+cd welcomeModule
+
+notepad "Welcome.java"
+
+package com.training.pack1;
+
+public class Welcome{
+
+	public static void print1(){
+		System.out.println("Modular Programming with Exports";
+	}
+
+	public String getMessage(){
+		return "Hello World from welcomeModule Welcome class");
+	}
+
+}
+
+notepad "module-info.java"
+
+module welcomeModule{
+	exports com.training.pack1;
+}
+
+cd ..
+cd ..
+
+javac --module-source-path src -d out -module welcomeModule
+-------------------------------------------------------------------
+
+cd src
+md clientModule
+cd clientModule
+notepad "Main.java"
+
+package com.training.ui;
+import com.training.pack1.Welcome;
+
+public class Main{
+	public static void main(String[] args){
+		Welcome.print1();
+		Welcome w=new Welcome();
+		System.out.println(w.getMessage());
+	}
+}
+
+notepad "module-info.java"
+
+module clientModule{
+	requires welcomeModule;
+}
+
+cd ..
+cd ..
+
+javac --module-source-path src -d out --module welcomeModule,clientModule
+
+java --module-path out --module clientModule/com.training.ui.Main
+
+or 
+
+java --module-path out --add-modules clientModule com.training.ui.Main
+
+----------------------------------------------
+java --list-modules
+java --module-path out --list-modules

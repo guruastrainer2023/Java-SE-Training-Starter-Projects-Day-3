@@ -1,0 +1,36 @@
+Creating First Modular Application...Compiling ... Execution
+------------------------------------------------------------------
+
+e:
+cd Java9ModularProjects
+cd Project02
+
+cd src
+md helloModule
+cd helloModule
+notepad "module-info.java"
+
+module helloModule{
+
+}
+
+notepad "Main.java"
+
+package com.greeting;
+
+public class Main{
+
+	public static void main(String args[]){
+		System.out.println("Hello World !");
+	
+	}
+
+
+
+}
+
+javac --module-source-path src -d out -m helloModule
+
+java --module-path out -m  helloModule/com.greeting.Main 
+(or)
+java --module-path out --add-modules helloModule com.greeting.Main

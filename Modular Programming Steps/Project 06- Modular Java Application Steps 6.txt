@@ -1,0 +1,79 @@
+Automatic Modules
+------------------------------------
+
+md project06
+cd project06
+
+
+md src
+cd src
+
+notepad Leave.java
+
+package com.training.bean1;
+
+public class Leave {
+
+	@Override
+	public String toString() {
+		return "Leave []";
+	}
+
+}
+
+notepad Approval.java
+
+package com.training.bean2;
+
+public class Approval {
+
+	@Override
+	public String toString() {
+		return "Approval []";
+	}
+
+}
+ 
+cd ..
+
+javac -d out src\*.java
+cd out 
+jar -cvf ..\hr-1.0.jar *
+
+cd src 
+md hello
+cd hello
+
+notepad "module-info.java"
+
+module hello{
+	requires hr;
+}
+
+notepad Main.java
+
+package com.training.ui;
+
+import com.training.bean1.Leave;
+import com.training.bean2.Approval;
+public class Main {
+
+	public static void main(String[] args) {
+		Leave leave=new Leave();
+		System.out.println(leave);
+		
+		Approval approval=new Approval();
+		System.out.println(approval);
+
+	}
+
+}
+
+
+
+
+cd ..\..
+
+javac --module-source-path src -d out1 --module-path hr-1.0.jar --module hello
+java --module-path out1;.  -m hello/com.training.ui.Main
+

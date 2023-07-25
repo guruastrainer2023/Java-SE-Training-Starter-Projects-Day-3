@@ -1,0 +1,12 @@
+
+
+------------------------------------------------------------
+
+rd /s mods
+
+dir /s /B *.java > sources.txt
+javac -d mods @sources.txt
+or
+javac -d mods --module-source-path src @sources.txt
+
+java -p mods -m hello/com.greeting.Main

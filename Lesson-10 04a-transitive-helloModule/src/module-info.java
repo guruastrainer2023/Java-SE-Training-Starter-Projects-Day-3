@@ -1,0 +1,3 @@
+module helloModule {
+	requires peopleModule;
+}
